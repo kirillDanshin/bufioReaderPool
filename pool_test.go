@@ -36,6 +36,22 @@ func TestNew(t *testing.T) {
 	})
 }
 
+func TestNewSize(t *testing.T) {
+	t.Run("NewSize() must not panic", func(t *testing.T) {
+		defer func() {
+			if r := recover(); r != nil {
+				t.Fail()
+			}
+		}()
+		NewSize(65536)
+	})
+	t.Run("NewSize() must not return nil", func(t *testing.T) {
+		if NewSize(65536) == nil {
+			t.Fail()
+		}
+	})
+}
+
 func TestPool_Get(t *testing.T) {
 	brp := New()
 	r := &net.TCPConn{}

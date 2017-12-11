@@ -49,6 +49,17 @@ func New() *Pool {
 	}
 }
 
+// NewSize allocates an empty bufioReader pool with given size.
+func NewSize(size int) *Pool {
+	return &Pool{
+		pool: &sync.Pool{
+			New: func() interface{} {
+				return bufio.NewReaderSize(nil, size)
+			},
+		},
+	}
+}
+
 // Get a bufio.Reader for given io.Reader.
 // Reads a bufio.Reader from the pool and resets it.
 func (p *Pool) Get(reader io.Reader) (r *bufio.Reader) {
